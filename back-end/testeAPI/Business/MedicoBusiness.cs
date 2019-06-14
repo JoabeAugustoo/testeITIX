@@ -23,22 +23,18 @@ namespace testeAPI.Business
       return _medicoData.GetMedicosByFilter(medicos, pg, itensPg, sort, sortOrder);
     }
 
-    public object GetMedicoById(int id)
+    public async Task<Medico> GetMedicoById(int id)
     {
-      throw new NotImplementedException();
+      return await _medicoData.FindMedicoById(id);
     }
 
-    public async Task AddMedico(Medico medico)
+    public async Task<int> AddMedico(Medico medico)
     {
       try
       {
         if (!CRMExists(medico.CRM))
         {
           return await _medicoData.AddMedico(medico);
-        }
-        else
-        {
-
         }
       }
       catch (Exception ex)
@@ -57,14 +53,24 @@ namespace testeAPI.Business
       return _medicoData.MedicoExists(id);
     }
 
-    public Task UpdateMedico(Medico medico)
+    public async Task<int> UpdateMedico(Medico medico)
     {
-      throw new NotImplementedException();
+      try
+      {
+        if (!CRMExists(medico.CRM))
+        {
+          return await _medicoData.UpdateMedico(medico);
+        }
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
     }
 
-    public Task DeleteMedico(Medico medico)
+    public async Task<int> DeleteMedico(Medico medico)
     {
-      throw new NotImplementedException();
+      return await _medicoData.DeleteMedico(medico);
     }
   }
 }
