@@ -47,7 +47,7 @@ namespace testeAPI.Data
         public bool ConsultaExists(Consulta consulta)
         {
             var medicoEmAtendimento = _bdTesteITIX.Consulta.Where(c => c.MedicoId == consulta.MedicoId)
-            .Where(c => c.DataInicialConsulta == consulta.DataInicialConsulta || c.DataFinalConsulta == consulta.DataFinalConsulta).Any();
+            .Where(c => c.DataInicialConsulta <= consulta.DataInicialConsulta && c.DataFinalConsulta >= consulta.DataFinalConsulta).Any();
             return medicoEmAtendimento;
         }
 

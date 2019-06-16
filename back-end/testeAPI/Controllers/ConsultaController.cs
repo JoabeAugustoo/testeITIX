@@ -35,7 +35,7 @@ namespace testeAPI.Controllers
             }
             catch (Exception ex)
             {
-                return TratarExcecao(ControllerContext, "Ocorreu um erro ao tentar listar as consultas!", ex);
+                return BadRequest("Ocorreu um erro ao tentar listar as consultas!", ex);
             }
         }
 
@@ -48,7 +48,7 @@ namespace testeAPI.Controllers
             }
             catch (Exception ex)
             {
-                return TratarExcecao(ControllerContext, "Ocorreu um erro ao tentar buscar a consulta!", ex);
+                return BadRequest("Ocorreu um erro ao tentar buscar a consulta!", ex);
             }
         }
 
@@ -71,7 +71,7 @@ namespace testeAPI.Controllers
             }
             catch (Exception ex)
             {
-                return TratarExcecao(ControllerContext, "Ocorreu um erro ao tentar incluir a consulta.", ex);
+                return BadRequest("Ocorreu um erro ao tentar incluir a consulta.", ex);
             }
         }
 
@@ -94,7 +94,7 @@ namespace testeAPI.Controllers
             }
             catch (Exception ex)
             {
-                return TratarExcecao(ControllerContext, "Ocorreu um erro ao tentar alterar o cadastro da consulta.", ex);
+                return BadRequest("Ocorreu um erro ao tentar alterar o cadastro da consulta.", ex);
             }
 
         }
@@ -118,7 +118,7 @@ namespace testeAPI.Controllers
             }
             catch (Exception ex)
             {
-                return TratarExcecao(ControllerContext, "Ocorreu um erro ao tentar excluir o cadastro do médico.", ex);
+                return BadRequest("Ocorreu um erro ao tentar excluir o cadastro do médico.", ex);
             }
         }
 
