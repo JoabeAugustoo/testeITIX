@@ -54,11 +54,6 @@ namespace testeAPI.Business
             return _medicoData.CRMExists(crm);
         }
 
-        public bool MedicoExists(int id)
-        {
-            return _medicoData.MedicoExists(id);
-        }
-
         public async Task<int> UpdateMedico(Medico medico)
         {
             try
@@ -73,7 +68,14 @@ namespace testeAPI.Business
 
         public async Task<int> DeleteMedico(Medico medico)
         {
-            return await _medicoData.DeleteMedico(medico);
+            try
+            {
+                return await _medicoData.DeleteMedico(medico);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
