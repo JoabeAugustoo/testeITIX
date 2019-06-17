@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'pmv-confirm-dialog',
+  selector: 'teste-confirm-dialog',
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.css'],
 })
-export class ConfirmDialogComponent {
+export class TesteConfirmDialogComponent {
 
   @Input() key: string;
   @Input() header: string = 'Confirmação';

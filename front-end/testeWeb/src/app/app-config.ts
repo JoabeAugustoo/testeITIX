@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class AppConfig {
 
-  title: string = "";
+  title: string = "Teste ITIX";
   readonly version: string = '1.0.0';
 
 }

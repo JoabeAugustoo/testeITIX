@@ -1,64 +1,31 @@
-<pmv-main-content>
-  <pmv-main-content-header title="Pendência" [subtitle]="title">
-    <pmv-loading [isLoading]="loading"></pmv-loading>
-  </pmv-main-content-header>
-  <pmv-main-content-body>
+<teste-main-content>
+  <teste-main-content-header title="Consulta" [subtitle]="title">
+    <p-loading [isLoading]="loading"></p-loading>
+  </teste-main-content-header>
+  <teste-main-content-body>
     <form #form="ngForm" validateOnSubmit (submit)="onSubmit(form)"
       (keydown.enter)="$event.preventDefault()">
       <div class="row">
         <div class="col-md-12">
           <p-tabView>
             <!-- Dados da Pendência -->
-            <p-tabPanel header="Dados da Pendência">
-              <pmv-pendencia-detalhe-dados #dadosComponent
-                [(pendencia)]="pendencia"
+            <p-tabPanel header="Dados da Consulta">
+              <consulta-detalhe-dados #dadosComponent
+                [(consulta)]="consulta"
                 [isFormTypeView]="isFormTypeView"
                 [isFormTypeCreate]="isFormTypeCreate"
                 [isFormTypeUpdate]="isFormTypeUpdate"
-                [isFormTypeAnswer]="isFormTypeAnswer"
-                [isFormTypeAvaliate]="isFormTypeAvaliate">
-              </pmv-pendencia-detalhe-dados>
-            </p-tabPanel>
-            <!-- Anexos da Pendência -->
-            <p-tabPanel header="Anexos da Pendência">
-              <pmv-pendencia-detalhe-anexos
-                  [(anexos)]="pendencia.anexos"
-                  [(anexosFiles)]="anexosFiles"
-                  [pendencia]="pendencia"
-                  [tiposDocumento]="tiposDocumento"
-                  [isFormTypeUpdate]="isFormTypeUpdate"
-                  [isFormTypeCreate]="isFormTypeCreate"
-                  [isFormTypeView]="isFormTypeView"
-                  [isFormTypeAnswer]="isFormTypeAnswer"
-                  [isFormTypeAvaliate]="isFormTypeAvaliate">
-              </pmv-pendencia-detalhe-anexos>
-            </p-tabPanel>
-            <!-- Documentos Pendentes -->
-            <p-tabPanel header="Documentos Pendentes">
-              <pmv-pendencia-detalhe-documentos-pendentes
-                  [(documentosPendentes)]="pendencia.documentosPendentes"
-                  [(documentosPendentesFiles)]="documentosFiles"
-                  [pendencia]="pendencia"
-                  [tiposDocumento]="tiposDocumento"
-                  [isFormTypeView]="isFormTypeView"
-                  [isFormTypeUpdate]="isFormTypeUpdate"
-                  [isFormTypeCreate]="isFormTypeCreate"
-                  [isFormTypeAnswer]="isFormTypeAnswer"
-                  [isFormTypeAvaliate]="isFormTypeAvaliate">
-              </pmv-pendencia-detalhe-documentos-pendentes>
+                [medicosOptions]="medicosOptions">
+              </consulta-detalhe-dados>
             </p-tabPanel>
           </p-tabView>
         </div>
-        <div class="col-md-12" style="text-align: right; padding: 5px 22px;"
-          *ngIf="!loading">
+        <div class="col-md-12" style="text-align: right; padding: 5px 22px;" *ngIf="!loading">
           <button type="submit" class="btn btn-primary" *ngIf="isFormTypeCreate || isFormTypeUpdate" [disabled]="loading">Salvar</button>
           <button type="button" class="btn btn-warning" (click)="cancelar()">{{
             isFormTypeView ? 'Fechar' : 'Cancelar' }}</button>
-          <button type="button" class="btn btn-warning" *ngIf="isFormTypeAvaliate" (click)="concluir()" [disabled]="loading">Concluir</button>
-          <button type="button" class="btn btn-primary" *ngIf="isFormTypeAnswer" (click)="responder()" [disabled]="loading">Responder</button>
-          <button type="button" class="btn btn-primary" *ngIf="isFormTypeAvaliate" (click)="salvarRascunho()" [disabled]="loading">Salvar</button>
         </div>
       </div>
     </form>
-  </pmv-main-content-body>
-</pmv-main-content>
+  </teste-main-content-body>
+</teste-main-content>

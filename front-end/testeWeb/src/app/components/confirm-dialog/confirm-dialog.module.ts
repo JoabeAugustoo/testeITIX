@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ConfirmDialogModule, ConfirmationService, SharedModule } from 'primeng/primeng';
-import { ConfirmDialogComponent } from './confirm-dialog.component';
 import { ConfirmDialogService } from 'src/app/services/confirm-dialog.service';
+import { TesteConfirmDialogComponent } from './confirm-dialog.component';
 
 
 @NgModule({
@@ -10,16 +10,16 @@ import { ConfirmDialogService } from 'src/app/services/confirm-dialog.service';
     ConfirmDialogModule
   ],
   declarations: [
-    ConfirmDialogComponent,
+    TesteConfirmDialogComponent,
   ],
   exports: [
-    ConfirmDialogComponent
+    TesteConfirmDialogComponent
   ],
 })
-export class PMVConfirmDialogModule {
+export class TesteConfirmDialogModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: PMVConfirmDialogModule,
+      ngModule: TesteConfirmDialogModule,
       providers: [
         ConfirmationService,
         ConfirmDialogService,

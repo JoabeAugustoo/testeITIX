@@ -72,33 +72,11 @@ export class ConsultaDetalheComponent extends DetailComponent implements OnInit 
     this.consultaService.getConsultaById(id).subscribe(
       consulta => {
         this.consulta = consulta['result'];
-        this.consulta.documentosPendentes.forEach(
-          (doc: Processo_PendenciaDocumentoSolicitado) => {
-            doc.documentoAceito = (doc.situacaoDocumentoSolicitadoId === 1) ? false : true;
-            doc.possuiArquivo = (doc.nomeArquivo) ? true : false;
-          }
-        );
-        this.consulta.dataCadastro = new Date(consulta['result'].dataCadastro.toString());
-        this.consulta.dataPrazo = new Date(consulta['result'].dataPrazo.toString());
-        this.consulta.numeroAnoProcessoMask = this.consulta.numeroProcesso.toString() + "/" + this.consulta.anoCadastro.toString();
-        this.consulta.processo = new SIPADProcesso();
-        this.filter.numeroProcesso = this.consulta.numeroProcesso;
-        this.filter.anoProcesso = this.consulta.anoCadastro;
         this.loading = false;
-        this.pendenciaService.getProcessoSipad(this.filter).subscribe(
-          response => {
-            const res: SIPADProcesso = response['result'];
-            this.clearProcessoSIPAD();
-            this.initializeProcesso(res);
-          }, error => {
-            this.loading = false;
-            throw error;
-          });
       }, error => {
         this.loading = false;
         throw error;
       });
-    this.loading = false;
   }
 
   /**
@@ -107,52 +85,13 @@ export class ConsultaDetalheComponent extends DetailComponent implements OnInit 
    * @param form
    */
   handleValidSubmission(form: NgForm): void {
-    const numAnoProcessoSIPAD: string[] = this.consulta.numeroAnoProcessoMask ? this.consulta.numeroAnoProcessoMask.split('/') : [];
-    this.consulta.numeroProcesso = Number(numAnoProcessoSIPAD[0]);
-    this.consulta.anoCadastro = Number(numAnoProcessoSIPAD[1]);
-
-    const existeDocPendente = this.consulta.documentosPendentes.every(documento =>
-      Boolean(documento.tipoDocumentoId));
-
     if (this.consulta.id) {
-      if (!this.consulta.processo.requerente || !this.consulta.processo.dataCadastro) {
-        this.notificationService.notifyInfo('É necessário informar um processo válido do SIPAD.');
-      }
-      else if (this.consulta.documentosPendentes.length === 0 || !existeDocPendente) {
-        this.notificationService.notifyError('É necessário informar ao menos um documento para a pendência.');
-      }
-      else {
-        this.pendenciaService.validarPendenciaEmAberto(this.consulta).subscribe(
-          response => {
-            if (response) {
-              this.notificationService.notifyError("Já existe pendência em aberto para o processo SIPAD informado.");
-            }
-          }, error => {
-            throw error;
-          });
-      }
+      this.updateConsulta();
     } else {
-      if (!this.consulta.processo.requerente || !this.consulta.processo.dataCadastro) {
-        this.notificationService.notifyInfo('É necessário informar um processo válido do SIPAD.');
-      }
-      else if (this.consulta.documentosPendentes.length === 0 || !existeDocPendente) {
-        this.notificationService.notifyError('É necessário informar ao menos um documento para a pendência.');
-      }
-      else {
-        this.pendenciaService.validarPendenciaEmAberto(this.consulta).subscribe(
-          response => {
-            if (response) {
-              this.notificationService.notifyError("Já existe pendência em aberto para o processo informado.");
-            } else {
-              this.addPendencia();
-            }
-          }, error => {
-            throw error;
-          }
-        );
-      }
+      this.addConsulta();
     }
   }
+
 
   /**
   * Cancela a operação atual
@@ -179,9 +118,30 @@ export class ConsultaDetalheComponent extends DetailComponent implements OnInit 
   addConsulta(): void {
     this.loading = true;
     this.consultaService.addConsulta(this.consulta).subscribe(
-      pendencia => {
-        this.consulta = pendencia;
+      consulta => {
+        this.consulta = consulta;
         this.notificationService.notifySuccess('Salvo com sucesso!');
+        this.loading = false;
+        this.router.navigate(['consulta']);
+      }, error => {
+        this.loading = false;
+        throw error;
+      }
+    );
+  }
+
+
+  /**
+   * Modifica uma consulta no banco de dados.
+   *
+   *
+   */
+  updateConsulta(): void {
+    this.loading = true;
+    this.consultaService.addConsulta(this.consulta).subscribe(
+      consulta => {
+        this.consulta = consulta;
+        this.notificationService.notifySuccess('Modificado com sucesso!');
         this.loading = false;
         this.router.navigate(['consulta']);
       }, error => {
