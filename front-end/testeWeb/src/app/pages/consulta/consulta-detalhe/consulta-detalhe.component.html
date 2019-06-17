@@ -1,0 +1,31 @@
+<teste-main-content>
+  <teste-main-content-header title="Consulta" [subtitle]="title">
+    <p-loading [isLoading]="loading"></p-loading>
+  </teste-main-content-header>
+  <teste-main-content-body>
+    <form #form="ngForm" validateOnSubmit (submit)="onSubmit(form)"
+      (keydown.enter)="$event.preventDefault()">
+      <div class="row">
+        <div class="col-md-12">
+          <p-tabView>
+            <!-- Dados da Pendência -->
+            <p-tabPanel header="Dados da Consulta">
+              <consulta-detalhe-dados #dadosComponent
+                [(consulta)]="consulta"
+                [isFormTypeView]="isFormTypeView"
+                [isFormTypeCreate]="isFormTypeCreate"
+                [isFormTypeUpdate]="isFormTypeUpdate"
+                [medicosOptions]="medicosOptions">
+              </consulta-detalhe-dados>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
+        <div class="col-md-12" style="text-align: right; padding: 5px 22px;" *ngIf="!loading">
+          <button type="submit" class="btn btn-primary" *ngIf="isFormTypeCreate || isFormTypeUpdate" [disabled]="loading">Salvar</button>
+          <button type="button" class="btn btn-warning" (click)="cancelar()">{{
+            isFormTypeView ? 'Fechar' : 'Cancelar' }}</button>
+        </div>
+      </div>
+    </form>
+  </teste-main-content-body>
+</teste-main-content>

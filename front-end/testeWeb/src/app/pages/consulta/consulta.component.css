@@ -1,0 +1,23 @@
+td>a {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.date-interval-input {
+  width: 40%;
+}
+
+:host /deep/ .dual>pmv-mask>div {
+  width: 48%;
+  display: inline-block;
+}
+
+:host /deep/ .prazo-expirado {
+  color: #ff0000;
+}
+
+:host /deep/ .no-prazo {
+  color: #333;
+}
+
+
