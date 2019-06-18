@@ -11,116 +11,116 @@ using testeAPI.Models.DTO;
 namespace testeAPI.Controllers
 {
 
-    [Produces("application/json")]
-    [Route("api/Consulta")]
-    [ApiController]
-    public class ConsultaController : BaseController
+  [Produces("application/json")]
+  [Route("api/Consulta")]
+  [ApiController]
+  public class ConsultaController : BaseController
+  {
+
+    public ConsultaBusiness _consultaBusiness;
+    public IConfiguration _configuration;
+
+    public ConsultaController(ConsultaBusiness consultaBusiness, IConfiguration config)
     {
+      _consultaBusiness = consultaBusiness;
+      _configuration = config;
+    }
 
-        public ConsultaBusiness _consultaBusiness;
-        public IConfiguration _configuration;
+    [HttpGet, Route("GetConsultasByFilter")]
+    public IActionResult GetConsultasByFilter([FromQuery] ConsultasFilterDTO consultas, [FromQuery] int pg, [FromQuery] int itensPg, [FromQuery] string sort, [FromQuery] int sortOrder)
+    {
+      try
+      {
+        return Ok(_consultaBusiness.GetConsultasByFilter(consultas, pg, itensPg, sort, sortOrder));
+      }
+      catch (Exception ex)
+      {
+        return BadRequest("Ocorreu um erro ao tentar listar as consultas!", ex);
+      }
+    }
 
-        public ConsultaController(ConsultaBusiness consultaBusiness, IConfiguration config)
-        {
-            _consultaBusiness = consultaBusiness;
-            _configuration = config;
-        }
+    [HttpGet, Route("GetConsultaById/{id}")]
+    public IActionResult GetConsultaById([FromRoute] int id)
+    {
+      try
+      {
+        return Ok(_consultaBusiness.GetConsultaByIdAsync(id));
+      }
+      catch (Exception ex)
+      {
+        return BadRequest("Ocorreu um erro ao tentar buscar a consulta!", ex);
+      }
+    }
 
-        [HttpGet, Route("GetConsultasByFilter")]
-        public IActionResult GetConsultasByFilter([FromQuery] ConsultasFilterDTO consultas, [FromQuery] int pg, [FromQuery] int itensPg, [FromQuery] string sort, [FromQuery] int sortOrder)
-        {
-            try
-            {
-                return Ok(_consultaBusiness.GetConsultasByFilter(consultas, pg, itensPg, sort, sortOrder));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Ocorreu um erro ao tentar listar as consultas!", ex);
-            }
-        }
+    [HttpPost, Route("AddConsulta")]
+    public async Task<IActionResult> AddConsulta()
+    {
+      var formData = await Request.ReadFormAsync();
+      var consulta = JsonConvert.DeserializeObject<Consulta>(formData["Consulta"][0]);
 
-        [HttpGet, Route("GetConsultaById/{id}")]
-        public IActionResult GetConsultaById([FromRoute] int id)
-        {
-            try
-            {
-                return Ok(_consultaBusiness.GetConsultaByIdAsync(id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Ocorreu um erro ao tentar buscar a consulta!", ex);
-            }
-        }
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
 
-        [HttpPost, Route("AddConsulta")]
-        public async Task<IActionResult> AddConsulta()
-        {
-            var formData = await Request.ReadFormAsync();
-            var consulta = JsonConvert.DeserializeObject<Consulta>(formData["Consulta"][0]);
+      try
+      {
+        await _consultaBusiness.AddConsulta(consulta);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        return Ok(consulta);
+      }
+      catch (Exception ex)
+      {
+        return BadRequest("Ocorreu um erro ao tentar incluir a consulta.", ex);
+      }
+    }
 
-            try
-            {
-                await _consultaBusiness.AddConsulta(consulta);
+    [HttpPut, Route("UpdateConsulta/{id}")]
+    public async Task<IActionResult> UpdateConsulta([FromRoute] int id)
+    {
+      var formData = await Request.ReadFormAsync();
+      var consulta = JsonConvert.DeserializeObject<Consulta>(formData["Consulta"][0]);
 
-                return Ok(consulta);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Ocorreu um erro ao tentar incluir a consulta.", ex);
-            }
-        }
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
 
-        [HttpPut, Route("UpdateConsulta/{id}")]
-        public async Task<IActionResult> UpdateConsulta([FromRoute] int id)
-        {
-            var formData = await Request.ReadFormAsync();
-            var consulta = JsonConvert.DeserializeObject<Consulta>(formData["Consulta"][0]);
+      try
+      {
+        await _consultaBusiness.UpdateConsulta(consulta);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                await _consultaBusiness.UpdateConsulta(consulta);
-
-                return Ok(consulta);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Ocorreu um erro ao tentar alterar o cadastro da consulta.", ex);
-            }
-
-        }
-
-        [HttpDelete, Route("DeleteConsulta/{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var formData = await Request.ReadFormAsync();
-            var consulta = JsonConvert.DeserializeObject<Consulta>(formData["Consulta"][0]);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                await _consultaBusiness.DeleteConsulta(consulta);
-
-                return Ok(consulta);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Ocorreu um erro ao tentar excluir o cadastro do médico.", ex);
-            }
-        }
+        return Ok(consulta);
+      }
+      catch (Exception ex)
+      {
+        return BadRequest("Ocorreu um erro ao tentar alterar o cadastro da consulta.", ex);
+      }
 
     }
+
+    [HttpDelete, Route("DeleteConsulta/{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+      var formData = await Request.ReadFormAsync();
+      var consulta = JsonConvert.DeserializeObject<Consulta>(formData["Consulta"][0]);
+
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      try
+      {
+        await _consultaBusiness.DeleteConsulta(consulta);
+
+        return Ok(consulta);
+      }
+      catch (Exception ex)
+      {
+        return BadRequest("Ocorreu um erro ao tentar excluir o cadastro do médico.", ex);
+      }
+    }
+
+  }
 }

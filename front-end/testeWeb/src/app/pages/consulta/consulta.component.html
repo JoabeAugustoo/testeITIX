@@ -1,88 +1,29 @@
-<pmv-main-content>
-  <pmv-main-content-header title="Pendências" subtitle="Listagem de Pendências">
-  </pmv-main-content-header>
-  <pmv-main-content-body>
+<teste-main-content>
+  <teste-main-content-header title="Consultas" subtitle="Listagem de Consultas">
+  </teste-main-content-header>
+  <teste-main-content-body>
     <form #form="ngForm" (keydown.enter)="$event.preventDefault()">
       <div class="form-group row">
-          <div class="col-md-2">
-              <label>Nº Processo</label>
-              <div class="dual">
-                <input numberOnly class="form-control" style="width: 48%; display: inline-block; position: relative; bottom: 1px" type="text"
-                  name="numProcessoValue" [(ngModel)]="filter.numeroProcesso" />
-                <pmv-mask [(ngModel)]="filter.anoProcesso"
-                  name="anoProcessoValue" mask="9999">
-                </pmv-mask>
-              </div>
-          </div>
-          <div class="col-md-2">
-              <pmv-mask-cpf-cnpj name="cpfCnpjValue" label="CPF/CNPJ Interessado"
-               [(ngModel)]="filter.documentoInteressado">
-              </pmv-mask-cpf-cnpj>
-          </div>
           <div class="col-md-6">
-              <pmv-input-text name="nomeInteressadoValue" label="Nome Interessado"
-               [(ngModel)]="filter.nomeInteressado" placeholder="Pesquisar por parte do nome iniciando com...">
-              </pmv-input-text>
-          </div>
-          <div class="col-md-2">
-              <pmv-date-interval [(ngModel)]="intervaloDatasProcessoValue"
-                name="intervaloDatasValue" header="Cadastro do Processo"
-                [showTime]="false" width="212px">
-              </pmv-date-interval>
+              <input name="nomePacienteValue" label="Nome Paciente"
+               [(ngModel)]="filter.nomePaciente" placeholder="Pesquisar por parte do nome iniciando com..."/>
           </div>
       </div>
-      <div class="form-group row">
-          <div class="col-md-5">
-                <pmv-dropdown name="situacaoAutoValue" label="Situação Atual"
-                [options]="situacoesOptions" [(ngModel)]="filter.situacao"
-                optionLabelField="descricao" optionValueField="id"
-                defaultOption=" ">
-              </pmv-dropdown>
-          </div>
-            <div class="col-md-2">
-              <pmv-date-interval [(ngModel)]="intervaloDatasPendenciaValue"
-                name="intervaloDatasPendenciaValue" header="Cadastro da Pendência"
-                [showTime]="false" width="212px">
-              </pmv-date-interval>
-          </div>
-      </div>
-        <div class="form-group" style="text-align: right;">
+      <div class="form-group" style="text-align: right;">
           <button type="button" class="btn btn-primary" [disabled]="loading"
-            (click)="pesquisarPendencia()">Pesquisar</button>
-           <button type="button" class="btn btn-primary" [disabled]="loading" [permission]="permissoes.IncluirPendencia"
-            (click)="incluirPendencia()">Incluir</button>
+            (click)="pesquisarConsultas()">Pesquisar</button>
+           <button type="button" class="btn btn-primary" [disabled]="loading"
+            (click)="incluirConsulta()">Incluir</button>
         </div>
     </form>
     <div class="form-group row">
       <div class="col-md-12" style="margin-top: 15px;">
-        <pmv-datatable [loading]="loading" [values]="pendencias" [rows]="itemsPerPage" (lazyLoad)="loadPendencias($event)" [lazy]="true" [totalRecords]="totalRecords"
-          [columns]="columns" [actions]="actions" (onAction)="onAction($event)" [first]="first">
-        </pmv-datatable>
+        <table [loading]="loading" [values]="consultas" [rows]="itemsPerPage" (lazyLoad)="loadConsultas($event)" [lazy]="true" [totalRecords]="totalRecords"
+          [columns]="columns" [actions]="actions" (onAction)="onAction($event)">
+        </table>
       </div>
     </div>
     <hr />
-  </pmv-main-content-body>
-</pmv-main-content>
+  </teste-main-content-body>
+</teste-main-content>
 
-<pmv-modal [closable]="false" [(visible)]="visible" header="Prorrogar Prazo da Pendência" width="650" [contentStyle]="{overflow: 'visible'}">
-    <div class="form-group row">
-      <div class="col-md-4">
-        <pmv-datepicker [disabled]="true" name="dataCadastroValue" label="Data de Cadastro" [ngModel]="pendenciaModal.dataCadastro">
-        </pmv-datepicker>
-      </div>
-      <div class="col-md-4">
-        <pmv-input-text name="numeroDiasValue" label="Nº de dias para resposta: *" [(ngModel)]="pendenciaModal.numDiasPrazo" (blur)="calculaPrazo()">
-        </pmv-input-text>
-      </div>
-      <div class="col-md-4">
-          <pmv-datepicker [disabled]="true" name="dataPrazoValue" label="Resposta até:" [ngModel]="pendenciaModal.dataPrazo">
-          </pmv-datepicker>
-        </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12" style="text-align: right; padding: 5px 22px;">
-        <button type="submit" class="btn btn-primary" (click)="atualizaPendencia($event)" [disabled]="loading">Salvar</button>
-        <button type="button" class="btn btn-warning" (click)="cancelar()">Fechar</button>
-      </div>
-    </div>
-</pmv-modal>

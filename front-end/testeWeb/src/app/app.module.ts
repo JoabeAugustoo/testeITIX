@@ -13,6 +13,8 @@ import localePt from '@angular/common/locales/pt';
 import { AppConfig } from './app-config';
 import { TesteConfirmDialogModule } from './components/confirm-dialog/confirm-dialog.module';
 import { MainContentModule } from './components/main-content/main-content.module';
+import { TreeTableModule, RadioButtonModule, ButtonModule, PanelModule, InputTextModule, InputMaskModule } from 'primeng/primeng';
+import { FormsModule } from '@angular/forms';
 
 registerLocaleData(localePt, 'pt');
 
@@ -29,6 +31,16 @@ registerLocaleData(localePt, 'pt');
     HttpClientModule,
     AppRoutingModule,
     ServicesModule,
+    PanelModule,
+    ButtonModule,
+    RadioButtonModule,
+    TreeTableModule,
+    InputTextModule,
+    TesteConfirmDialogModule,
+    MainContentModule,
+    InputMaskModule,
+    FormsModule
+
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
