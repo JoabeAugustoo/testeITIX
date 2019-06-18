@@ -18,9 +18,9 @@
     </form>
     <div class="form-group row">
       <div class="col-md-12" style="margin-top: 15px;">
-        <table [loading]="loading" [values]="consultas" [rows]="itemsPerPage" (lazyLoad)="loadConsultas($event)" [lazy]="true" [totalRecords]="totalRecords"
+        <p-table [loading]="loading" [value]="consultas" [rows]="itemsPerPage" (lazyLoad)="loadConsultas($event)" [lazy]="true" [totalRecords]="totalRecords"
           [columns]="columns" [actions]="actions" (onAction)="onAction($event)">
-        </table>
+        </p-table>
       </div>
     </div>
     <hr />
