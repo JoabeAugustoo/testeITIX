@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { DetailComponent } from '../../../shared/interfaces/detail-component.interface';
 import { FormType } from '../../../models/enums/form-type.enum';
 import { ConsultaDetalheDadosComponent } from './consulta-detalhe-dados/consulta-detalhe-dados.component';
 import { ConsultaService } from 'src/app/services/consulta-service';
@@ -9,6 +8,7 @@ import { ConfirmDialogService } from 'src/app/services/confirm-dialog.service';
 import { NotificationService } from 'src/app/services/notification-service';
 import { RetornoConsultasDTO } from 'src/app/models/DTO/retorno-consultas.dto';
 import { Consulta } from 'src/app/models/consulta.model';
+import { DetailComponent } from '../../interfaces/detail-component.interface';
 
 @Component({
   selector: 'consulta-detalhe',
@@ -25,7 +25,7 @@ export class ConsultaDetalheComponent extends DetailComponent implements OnInit 
   formType: FormType;
 
 
-  @ViewChild(ConsultaDetalheDadosComponent) dadosComponent: ConsultaDetalheDadosComponent;
+  @ViewChild(ConsultaDetalheDadosComponent, {static: false}) dadosComponent: ConsultaDetalheDadosComponent;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +34,7 @@ export class ConsultaDetalheComponent extends DetailComponent implements OnInit 
     private notificationService: NotificationService,
     private consultaService: ConsultaService,
   ) {
-    super(route, notificationService);
+    super(route);
   }
 
   ngOnInit() {

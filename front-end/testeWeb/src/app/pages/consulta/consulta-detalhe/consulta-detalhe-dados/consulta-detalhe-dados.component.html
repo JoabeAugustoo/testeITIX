@@ -1,13 +1,30 @@
 <div provide-parent-form>
     <div class="form-group row">
         <div class="col-md-3">
-            <input required type="text" label="Nome do Paciente *" [(ngModel)]="consulta.nomePaciente" [disabled]="isFormTypeView"/>
-        </div>
-        <div class="col-md-6">
-            <input required type="datetime" name="requerenteProcessoValue" [(ngModel)]="consulta.dataNascimento" [disabled]="isFormTypeView" label="Data de Nascimento do Paciente*"/>
+            <input required type="text" label="Nome do Paciente *" [(ngModel)]="consulta.nomePaciente"
+                [disabled]="isFormTypeView" />
         </div>
         <div class="col-md-3">
-            <input name="dataCadastroProcessoValue" [(ngModel)]="pendencia.processo.dataCadastro" [disabled]="isFormTypeView" label="Data Inicial da Consulta"/>
+            <input required type="datetime" name="requerenteProcessoValue" [(ngModel)]="consulta.dataNascimento"
+                [disabled]="isFormTypeView" label="Data de Nascimento do Paciente*" />
+        </div>
+        <div class="col-md-3">
+            <input required type="datetime"  name="dataCadastroProcessoValue" [(ngModel)]="consulta.dataInicialConsulta"
+                [disabled]="isFormTypeView" label="Data Inicial da Consulta" />
+        </div>
+        <div class="col-md-3">
+            <input required type="datetime"  name="dataCadastroProcessoValue" [(ngModel)]="consulta.dataFinalConsulta"
+                [disabled]="isFormTypeView" label="Data Final da Consulta" />
         </div>
     </div>
- </div>
+    <div class="form-group row">
+        <div class="col-md-6">
+            <input required type="text" label="Observações *" [(ngModel)]="consulta.observacoes"
+                [disabled]="isFormTypeView" />
+        </div>
+        <div class="col-md-3">
+            <p-dropdown required type="datetime"  name="dataCadastroProcessoValue" [(ngModel)]="consulta.dataFinalConsulta"
+                [disabled]="isFormTypeView" label="Data Final da Consulta" />
+        </div>
+    </div>
+</div>

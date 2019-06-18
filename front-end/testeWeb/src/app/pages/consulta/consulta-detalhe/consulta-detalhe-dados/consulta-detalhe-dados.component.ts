@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NotificationService, Combobox } from 'pmv-common';
 import { Consulta } from 'src/app/models/consulta.model';
 import { ConsultaService } from 'src/app/services/consulta-service';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification-service';
 
 @Component({
   selector: 'consulta-detalhe-dados',
